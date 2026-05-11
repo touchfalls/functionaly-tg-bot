@@ -40,8 +40,8 @@ Telegram-бот на Python для быстрых действий, генера
 ### 1. Клонируй репозиторий
 
 ```bash
-git clone https://github.com/your-username/your-repo.git
-cd your-repo
+git clone https://github.com/touchfalls/functionaly-tg-bot.git
+cd functionaly-tg-bot
 ```
 
 ### 2. Создай виртуальное окружение
