@@ -61,6 +61,7 @@ def cmd_start(message: Message) -> None:
         InlineKeyboardButton("🔐Пароль (12)", callback_data="action_password_12"),
         InlineKeyboardButton("🔐Пароль (20)", callback_data="action_password_20"),
         InlineKeyboardButton("🎰Число 1-100", callback_data="action_random"),
+        InlineKeyboardButton("🗺️Карта CS2", callback_data="action_maps")
     )
 
     user_name = message.from_user.username
@@ -73,6 +74,7 @@ def cmd_start(message: Message) -> None:
         f"🎲/dice - кинуть кубик\n"
         f"🔐/password - сгенерировать пароль\n"
         f"🎰/random - случайное число в диапозоне\n"
+        f"🗺️/maps - случайная карта из CS2 для рандомного поиска."
         f"\n"
         f"Попробуй прямо сейчас!"
     )
@@ -97,6 +99,19 @@ def handler_callback(call: CallbackQuery):
         bot.send_message(chat_id=chat_id, text=generate_password(length=20))
     elif call.data == "action_random":
         bot.send_message(chat_id=chat_id, text=generate_random())
+    elif call.data == "action_maps":
+        maps = [
+            "🐸Ancient",
+            "🏝️Anubis",
+            "🌴Dust II",
+            "🌋Inferno",
+            "🏜️Mirage",
+            "💣Nuke",
+            "🌉Overpass"
+        ]
+
+        random_map = random.choice(maps)
+        bot.send_message(chat_id=chat_id, text=f"Случайная карта из CS2 для рандомного поиска:\n{random_map}")
 
     bot.answer_callback_query(call.id)
 
@@ -178,6 +193,20 @@ def cmd_random(message: Message) -> None:
         
     bot.reply_to(message=message, text=text)
 
+@bot.message_handler(commands=['maps'])
+def cmd_maps(message: Message) -> None:
+    maps = [
+        "🐸Ancient",
+        "🏝️Anubis",
+        "🌴Dust II",
+        "🌋Inferno",
+        "🏜️Mirage",
+        "💣Nuke",
+        "🌉Overpass"
+    ]
+
+    random_map = random.choice(maps)
+    bot.reply_to(message=message, text=f"Случайная карта из CS2 для рандомного поиска:\n{random_map}")
 
 if __name__ == '__main__':
     print("Бот запущен!")
