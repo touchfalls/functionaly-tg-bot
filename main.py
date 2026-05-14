@@ -91,9 +91,9 @@ def handler_callback(call: CallbackQuery):
     elif call.data == "action_dice":
         bot.send_message(chat_id=chat_id, text=roll_dice())
     elif call.data == "action_password_12":
-        bot.send_message(chat_id=chat_id, text=generate_password())
+        bot.send_message(chat_id=chat_id, text=generate_password(), parse_mode="Markdown")
     elif call.data == "action_password_20":
-        bot.send_message(chat_id=chat_id, text=generate_password(length=20))
+        bot.send_message(chat_id=chat_id, text=generate_password(length=20), parse_mode="Markdown")
     elif call.data == "action_random":
         bot.send_message(chat_id=chat_id, text=generate_random())
     elif call.data == "action_maps":
