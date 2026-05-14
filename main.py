@@ -205,12 +205,12 @@ def cmd_maps(message: Message) -> None:
     random_map = random.choice(maps)
     bot.reply_to(message=message, text=f"Случайная карта из CS2 для рандомного поиска:\n{random_map}")
 
-if __name__ == '__main__':
+if __name__ == '__main__': # ВАЖНО: здесь должны быть двойные подчеркивания!
     import time
     print("Бот запущен!")
     while True:
         try:
-            bot.infinity_polling(timeout=30, long_polling_timeout=30)
+            bot.infinity_polling(none_stop=True) 
         except Exception as error:
-            print(error)
+            print(f"Ошибка: {error}")
             time.sleep(5)
