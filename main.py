@@ -1,9 +1,7 @@
 import telebot
 import random
 import string
-import requests
 from telebot.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery
-import mcstatus
 from mcstatus import JavaServer as Java
 from PIL import Image
 from config import BOT_TOKEN
@@ -209,5 +207,11 @@ def cmd_maps(message: Message) -> None:
     bot.reply_to(message=message, text=f"Случайная карта из CS2 для рандомного поиска:\n{random_map}")
 
 if __name__ == '__main__':
+    import time
     print("Бот запущен!")
-    bot.infinity_polling()
+    while True:
+        try:
+            bot.infinity_polling(timeout=30, long_polling_timeout=30)
+        except Exception as error:
+            print(error)
+            time.sleep(5)
