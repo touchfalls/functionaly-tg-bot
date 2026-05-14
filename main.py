@@ -2,7 +2,6 @@ import telebot
 import random
 import string
 from telebot.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery
-from mcstatus import JavaServer as Java
 from PIL import Image
 from config import BOT_TOKEN
 
