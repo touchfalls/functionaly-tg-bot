@@ -58,7 +58,8 @@ def cmd_start(message: Message) -> None:
         InlineKeyboardButton("🔐Пароль (12)", callback_data="action_password_12"),
         InlineKeyboardButton("🔐Пароль (20)", callback_data="action_password_20"),
         InlineKeyboardButton("🎰Число 1-100", callback_data="action_random"),
-        InlineKeyboardButton("🗺️Карта CS2", callback_data="action_maps")
+        InlineKeyboardButton("🗺️Карта CS2", callback_data="action_maps"),
+        InlineKeyboardButton("📸Сделать чб фото", callback_data="action_img")
     )
 
     user_name = message.from_user.username
@@ -71,7 +72,8 @@ def cmd_start(message: Message) -> None:
         f"🎲/dice - кинуть кубик\n"
         f"🔐/password - сгенерировать пароль\n"
         f"🎰/random - случайное число в диапозоне\n"
-        f"🗺️/maps - случайная карта из CS2 для рандомного поиска."
+        f"🗺️/maps - случайная карта из CS2 для рандомного поиска\n"
+        f"📸/img - сделать любую фотку черно-белой\n"
         f"\n"
         f"Попробуй прямо сейчас!"
     )
@@ -106,15 +108,23 @@ def handler_callback(call: CallbackQuery):
             "💣Nuke",
             "🌉Overpass"
         ]
-
         random_map = random.choice(maps)
         bot.send_message(chat_id=chat_id, text=f"Случайная карта из CS2 для рандомного поиска:\n{random_map}")
+    elif call.data == "action_img":
+        bot.send_message(chat_id=chat_id, text=ask_for_photo())
 
     bot.answer_callback_query(call.id)
 
 
-@bot.message_handler(content_types=['photo'])
-def make_black_white(message):
+@bot.message_handler(commands=['img'])
+def ask_for_photo(message: Message):
+    msg = bot.send_message(message.chat.id, 'Отправь мне фото, я сделаю его чёрно-белым')
+    bot.register_next_step_handler(msg, make_black_white)
+
+def make_black_white(message: Message):
+    if not message.photo:
+        bot.reply_to(message, 'Это не фото 🙂 Пришли, пожалуйста, изображение.')
+        return
     # Фото принимаем (загружаем себе)
     file_info = bot.get_file(message.photo[-1].file_id)
     downloaded_file = bot.download_file(file_info.file_path)
